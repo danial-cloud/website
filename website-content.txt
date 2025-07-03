@@ -1,0 +1,220 @@
+EVOKODE - WEBSITE CONTENT
+========================
+
+HEADER NAVIGATION
+-----------------
+- Logo: Evokode (collapsed: E.)
+- Navigation: Works, Benefits, Comparison (centered, increased font size, hover color: rgb(81, 47, 235))
+- CTA Button: Chat Now → (collapsed: arrow icon)
+- Button Color: rgb(81, 47, 235)
+- Z-index adjustments to prevent menu overlap on scroll
+
+HERO SECTION
+------------
+Tagline: Evokode - Your Website Partner
+
+Main Headline: We Don't Just Build Websites We Build Market Leaders.
+- Text Color: rgb(81, 47, 235)
+
+Subheading: Your website is your first impression. We make sure it's unforgettable, high-converting, and built to dominate.
+
+CTA Button: Book a 15 min call →
+- Button Color: rgb(81, 47, 235)
+- Reduced vertical padding for upward movement
+
+PLATFORM LOGOS
+--------------
+Updated to clean SVG icons without text labels or colored backgrounds:
+- Fiverr
+- Upwork
+- LinkedIn
+- Freelancer
+- Meta
+- Netflix
+- Adobe
+- Spotify
+- Slack
+- Dropbox
+- Twitter
+- Uber
+- Airbnb
+- PayPal
+
+PORTFOLIO SECTION
+-----------------
+Title: Our Portfolio
+
+Portfolio Items (Modern Card Layout):
+1. Coming Soon - "Other works will be updated soon." (Special colored card)
+2. Yoga & Fitness Website
+3. Dental Clinic Website
+4. Real Estate Platform
+
+Design Features:
+- White background cards with thick rgb(81, 47, 235) borders
+- Large image previews
+- Full-width horizontal slider with hidden scrollbars
+- Auto-slide functionality with pause on hover
+- Navigation arrows
+- Infinite loop carousel
+- Shows 3 cards at a time
+- Custom Carousel component using embla-carousel-react
+
+SERVICES SECTION
+----------------
+Title: All Your Website Needs, Expertly Handled
+
+Description: End-to-end website solutions ❤️🔥 that ensure your website looks great, functions flawlessly, and drives results. 🚀
+
+Services List:
+- END-TO-END WEB DEVELOPMENT
+- CUSTOM WEBSITE DESIGN
+- LANDING PAGE
+- E-COMMERCE WEBSITE
+- WEBSITE OPTIMIZATION
+- SEO (SEARCH ENGINE OPTIMIZATION)
+
+BENEFITS SECTION
+----------------
+Badge: Benefits
+Title: Because results matter.
+
+Benefit Cards:
+1. End-to-End Service
+   From ideation to launch, we handle every step of your website's journey, ensuring a seamless process.
+
+2. Budget-Friendly Packages
+   No hidden fees. We offer clear and upfront pricing, so you know exactly what you're investing in.
+
+3. Long-Term Partnership
+   Our work doesn't stop at launch. We continually optimize your website to keep it ahead of the competition.
+
+PROCESS SECTION
+---------------
+Badge: How it starts?
+Title: See what you can expect.
+
+Process Steps:
+1. Planning & Design
+   We start by understanding your brand and goals, followed by creating a design tailored to your vision.
+
+2. Development
+   Our team brings the design to life with clean, efficient code, ensuring your website is fast and scalable.
+
+3. Optimization & SEO
+   We optimize for performance and implement SEO best practices to ensure your website ranks and performs well.
+
+4. Launch & Support
+   After launching, we continue to optimize and provide support to ensure long-term success.
+
+COMPARISON SECTION
+------------------
+Badge: Comparison
+Title: What makes us unique?
+CTA: Book an Intro Call →
+
+Comparison Headers:
+- With Evokode:
+- Without Evokode:
+
+Comparison Points:
+1. Expert Developer and Designer vs Junior Developer and Designer
+   Experience and expertise at your fingertips, ensuring exceptional design quality vs Inexperienced designers may compromise on quality and attention to detail.
+
+2. Dedicated Project Management vs No Project Management
+   Personal project manager ensures timely delivery and clear communication throughout vs Lack of coordination leads to delays, miscommunication, and project scope creep.
+
+3. Cost Efficient vs Never-ending Invoices
+   Transparent pricing and optimized resources for maximum value vs Unclear pricing and hidden costs can drain your budget & your bank.
+
+TESTIMONIALS SECTION
+--------------------
+Badge: Testimonials
+Title: Trusted by businesses worldwide
+
+Testimonials:
+1. Valentina Coletti - UX Designer
+   "I found Sunny in a moment with high urgency for a project. He was quickly available and flexible, he pick up the tasks easily and worked very hard on short deadlines. Recommend!"
+
+2. Atheek Ahamath - UX Consultant
+   "It's really amazing! The team Brandvertise.in exceeded my expectations. The website they designed is not just visually stunning but also highly functional and user-friendly."
+
+3. Dr. Chia Jung Lee - Head : 70Dental
+   "Great work! The whole process was smooth, communication was clear, and the final result exceeded our expectations. It was a pleasure working together, and I would definitely recommend to anyone!"
+
+CONTACT SECTION
+---------------
+Badge: Contacts
+Title: Ask whatever you have in your mind
+Description: Whether you have questions or are ready to discuss your business, we're here to help. Reach out today.
+
+Contact Information:
+- Email: hello@evokode.com
+- Phone: +92 300 123 4567
+- Location: Karachi, Pakistan
+
+Contact Form Fields:
+- Name (placeholder: Jane Smith)
+- Email (placeholder: jane@framer.com)
+- Message (placeholder: Hi, I am reaching out for...)
+- Submit Button
+
+FAQ SECTION
+-----------
+Title: Questions? Answers.
+
+FAQs:
+1. What makes Evokode different from agencies or freelancers?
+   We're not just another agency—we're Pakistan's #1 website design & development powerhouse. Unlike agencies that charge high fees with slow turnaround times or freelancers who may lack reliability, we offer high-quality, fast, and scalable solutions with dedicated support.
+
+2. What platforms do you develop websites on?
+   We work with Framer, WordPress, Shopify, and custom-coded solutions to match your specific needs. We recommend the best platform based on your goals, ensuring scalability and ease of management.
+
+3. How do we collaborate during the project?
+   We keep things simple and transparent. You'll get a dedicated project manager and access to our collaboration tools (WhatsApp, Notion, or Trello) to track progress, share feedback, and stay in the loop.
+
+4. How fast will my website be ready?
+   Speed matters! Our structured process ensures that simple websites are delivered in as little as 1-2 weeks, while more complex projects are completed within 3-4 weeks—without compromising on quality.
+
+5. What if I need my website done urgently?
+   We understand deadlines! With our Superfast Priority Service, we can accelerate your project and deliver a high-quality website in record time.
+
+FLOATING CTA
+------------
+Button: Book a call →
+- Button Color: rgb(81, 47, 235)
+
+CALENDLY INTEGRATION
+--------------------
+URL: https://calendly.com/danialahmad2318
+
+BRAND COLORS
+------------
+- Primary: rgb(81, 47, 235) (replaced cyan)
+- Secondary: Orange (from-orange-400 to-orange-500)
+- Background: Dark gradient (from-black via-gray-900 to-black)
+- Text: White primary, Gray-300 secondary, Gray-500 muted
+
+ANIMATIONS
+----------
+- Sliding company logos
+- Smooth scroll navigation
+- Hover effects on cards and buttons
+- FAQ accordion animations
+- Scroll-triggered header transformation
+- Framer Motion animations for sections
+- Portfolio carousel auto-slide with pause on hover
+- Custom carousel navigation with infinite loop
+
+TECHNICAL CHANGES
+-----------------
+- React downgraded to v18 for compatibility
+- date-fns downgraded to compatible version
+- Custom Carousel component using embla-carousel-react
+- Portfolio section redesigned with modern card layout
+- Header menu centered and styled with new color scheme
+- Button colors updated to rgb(81, 47, 235) throughout
+- Platform logos updated to clean SVG icons
+- Hero section padding reduced for upward movement
+- Z-index fixes for header navigation
+- Custom window property for carousel hover pause functionality
