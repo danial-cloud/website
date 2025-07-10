@@ -5,10 +5,19 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel"
 import Marquee from "react-fast-marquee"
 
+// Add TypeScript declaration for Calendly to fix linter error
+declare global {
+  interface Window {
+    Calendly?: {
+      initPopupWidget: (options: { url: string }) => void;
+    };
+  }
+}
+
 export default function EntalogicsHero() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const [openFAQ, setOpenFAQ] = useState<number | null>(null)
-  const [isDarkMode, setIsDarkMode] = useState(true)
+  const [isDarkMode, setIsDarkMode] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [zoom, setZoom] = useState(1)
   const [offset, setOffset] = useState({ x: 0, y: 0 })
@@ -58,7 +67,7 @@ export default function EntalogicsHero() {
 
   // Calendly popup function
   const openCalendly = () => {
-    if (typeof window !== "undefined" && window.Calendly) {
+    if (typeof window !== "undefined" && window.Calendly?.initPopupWidget) {
       window.Calendly.initPopupWidget({ url: "https://calendly.com/danialahmad2318" })
     }
   }
@@ -551,11 +560,9 @@ export default function EntalogicsHero() {
                 {/* Mobile CTA Button */}
                 <button
                   onClick={openCalendly}
-                  className={`transition-all duration-500 hover:transform hover:-translate-y-0.5 ${
-                    isScrolled
-                      ? "bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-400 hover:to-blue-500 text-white px-3 py-2 rounded-full text-sm font-medium shadow-lg"
-                      : `${themeClasses.primaryButton} rounded-lg px-3 py-2 text-sm`
-                  }`}
+                  className={`transition-all duration-500 hover:transform hover:-translate-y-0.5 px-3 py-2 rounded-lg text-sm font-medium shadow-lg
+                    bg-[rgb(81,47,235)] text-white
+                    sm:${themeClasses.primaryButton} sm:rounded-lg sm:px-3 sm:py-2 sm:text-sm`}
                 >
                   {isScrolled ? (
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -689,8 +696,27 @@ export default function EntalogicsHero() {
         {/* Hero Section */}
         <main className="text-center py-8 lg:py-12">
           <div className="mb-6"></div>
-          <h1 className={`font-black leading-tight mb-6 max-w-3xl mx-auto ${themeClasses.primaryText} font-[Poppins]`} style={{ fontFamily: 'Poppins, sans-serif', fontSize: '45px' }}>We Don't Just Build Websites, We Build Brands That Convert.</h1>
-          <p className={`text-lg ${themeClasses.secondaryText} mb-10 max-w-xl mx-auto leading-relaxed font-[Inter]`} style={{ fontFamily: 'Inter, sans-serif' }}>Your online presence deserves more than just a pretty layout. We deliver high-performing websites that are optimized, scalable, and designed to generate results.</p>
+          <div className="flex justify-center mb-4">
+            <span className="inline-block px-3 sm:px-7 py-1 rounded-full border border-[rgb(81,47,235)] bg-white text-[rgb(31,41,55)] text-base font-medium shadow-[0_0_16px_2px_rgba(81,47,235,0.25)]">
+              Evokode.com – Your Website Partner
+            </span>
+          </div>
+          <h1
+            className={`font-black leading-tight mb-6 max-w-3xl mx-auto ${themeClasses.primaryText} font-[Poppins] text-[30px] leading-[1.2] sm:text-[45px] sm:leading-[1.1]`}
+            style={{
+              fontFamily: 'Poppins, sans-serif',
+            }}
+          >
+            We Don't Just Build Websites, We Build Brands That <span style={{ color: 'rgb(81,47,235)' }}>Convert.</span>
+          </h1>
+          <p
+            className={`text-lg ${themeClasses.secondaryText} mb-10 max-w-xl mx-auto leading-relaxed font-[Inter] text-[16px] leading-[22px] sm:text-[18px] sm:leading-[29px]`}
+            style={{
+              fontFamily: 'Inter, sans-serif',
+            }}
+          >
+            Your online presence deserves more than just a pretty layout. We deliver high-performing websites that are optimized, scalable, and designed to generate results.
+          </p>
           <button
             onClick={openCalendly}
             className="bg-[rgb(81,47,235)] text-white px-6 py-3 rounded-lg text-base font-semibold transition-all duration-200 hover:transform hover:-translate-y-0.5 mb-16 shadow-lg font-[Inter]"
@@ -700,7 +726,7 @@ export default function EntalogicsHero() {
           </button>
 
           {/* Sliding Company Logos */}
-          <div className="relative overflow-hidden mb-16">
+          <div className="relative overflow-hidden mb-4 sm:mb-16">
             <div className="flex animate-slide space-x-12 items-center justify-center opacity-80">
               {/* SVG Logos: Fiverr, Upwork, LinkedIn, Freelancer, Meta, Netflix, Adobe, Spotify, Slack, Dropbox, Twitter, Uber, Airbnb, PayPal */}
               {/* Fiverr */}
@@ -804,7 +830,17 @@ export default function EntalogicsHero() {
 
       {/* Portfolio Image Slider - Full Width */}
       <div id="works" className="mb-20 relative">
-        <h2 className={`portfolio-heading text-center mb-8 ${themeClasses.primaryText}`}>Our Portfolio</h2>
+        <h2 className={`portfolio-heading text-center mb-8 ${themeClasses.primaryText} leading-[1.2]`} style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: '25px', lineHeight: 1.2,  }}>
+          Our Portfolio
+          <style>{`
+            @media (min-width: 640px) {
+              .portfolio-heading { font-size: 30px !important; }
+            }
+            @media (max-width: 639px) {
+              .portfolio-heading { font-size: 25px !important; }
+            }
+          `}</style>
+        </h2>
         <Carousel
           opts={{ align: "start", loop: true }}
           setApi={setEmblaApi}
@@ -870,8 +906,7 @@ export default function EntalogicsHero() {
 
       {/* Services Section */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
-        <div className={`${themeClasses.cardBg} rounded-3xl p-7 border transition-all duration-700`}>
-          <h2 className={`text-center mb-8 ${themeClasses.primaryText}`} style={{ fontFamily: 'Poppins, sans-serif', fontSize: '30px', fontWeight: 700 }}>
+        <h2 className={`text-center mb-8 ${themeClasses.primaryText} text-[25px] leading-[1.2] sm:text-[30px]`} style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700 }}>
             Everything You Need to Grow Online—Handled by Experts
                   </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -885,7 +920,7 @@ export default function EntalogicsHero() {
                     <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
                     </svg>
                 ),
-                bullets: ["Custom themes & plugin development", "Builders: Elementor, WPBakery, Oxygen, Divi, Gutenberg", "ACF & Custom Post Types for dynamic content", "Membership sites with Restrict Content Pro, MemberPress", "Ongoing maintenance & speed boost"]
+              bullets: ["Custom themes & plugin development", "Builders: Elementor, WPBakery, Oxygen, Divi, Gutenberg", "ACF & Custom Post Types for dynamic content", "Membership sites", "Ongoing maintenance & speed boost"]
               },
               {
                 title: "WooCommerce & eCommerce Development",
@@ -944,13 +979,13 @@ export default function EntalogicsHero() {
               }
             ].map((service, idx) => (
               <div key={idx} className={`${themeClasses.cardBg} rounded-2xl p-6 border transition-all duration-300 hover:shadow-lg`}>
-                <div className="mb-4">{service.icon}</div>
-                <h3 className={`service-card-heading text-xl font-bold ${themeClasses.primaryText} mb-2`}>{service.title}</h3>
-                <h4 className={`service-card-heading text-lg font-semibold text-[rgb(81,47,235)] mb-3`}>{service.subtitle}</h4>
-                <p className={`service-card-body ${themeClasses.secondaryText} mb-4`}>{service.desc}</p>
-                <ul className="service-card-body space-y-2">
+              <div className="mb-1">{service.icon}</div>
+              <h3 className={`service-card-heading text-xl font-bold ${themeClasses.primaryText} mb-0`} style={{ marginBottom: 0 }}>{service.title}</h3>
+              <h4 className={`service-card-heading text-lg font-semibold text-[rgb(81,47,235)] mb-0`} style={{ marginBottom: 0 }}>{service.subtitle}</h4>
+              <p className={`service-card-body ${themeClasses.secondaryText} mb-2`} style={{ lineHeight: 1.1 }}>{service.desc}</p>
+              <ul className="service-card-body space-y-1">
                   {service.bullets.map((bullet, i) => (
-                    <li key={i} className={`flex items-start text-sm ${themeClasses.mutedText}`}>
+                  <li key={i} className={`flex items-start text-sm ${themeClasses.mutedText}`} style={{ lineHeight: 1.1 }}>
                       <span className="mr-2 text-[rgb(81,47,235)] mt-0.5">•</span>
                       <span>{bullet}</span>
                     </li>
@@ -958,7 +993,6 @@ export default function EntalogicsHero() {
                 </ul>
                 </div>
               ))}
-          </div>
         </div>
       </div>
 
@@ -971,8 +1005,8 @@ export default function EntalogicsHero() {
           </div>
         </div>
 
-        {/* Main Heading */}
-        <h2 className={`text-center mb-12 ${themeClasses.primaryText}`} style={{ fontFamily: 'Poppins, sans-serif', fontSize: '30px', fontWeight: 700 }}>
+        {/* Benefits Main Heading */}
+        <h2 className={`text-center mb-12 ${themeClasses.primaryText}`} style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: '25px', lineHeight: '30px' }}>
           Because results matter.
         </h2>
 
@@ -1040,15 +1074,15 @@ export default function EntalogicsHero() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <div className="inline-block px-5 py-1 rounded-full border transition-all duration-700 shadow-[0_0_16px_2px_rgb(81,47,235,0.7)] border-[rgb(81,47,235)]">
-            <span className={`${themeClasses.mutedText} text-base font-medium`}>How it starts?</span>
+          <div className="inline-block px-7 py-2 rounded-full border border-[rgb(81,47,235)] bg-white text-[rgb(31,41,55)] text-base font-medium shadow-[0_0_16px_2px_rgba(81,47,235,0.25)]">
+            How it starts?
           </div>
         </motion.div>
 
-        {/* Main Heading */}
+        {/* Process Main Heading */}
         <motion.h2
-          className={`text-center mb-12 ${themeClasses.primaryText}`}
-          style={{ fontFamily: 'Poppins, sans-serif', fontSize: '30px', fontWeight: 700 }}
+          className={`text-center mb-12 ${themeClasses.primaryText} text-[25px] sm:text-[30px]`}
+          style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, lineHeight: '30px' }}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -1156,10 +1190,10 @@ export default function EntalogicsHero() {
           </div>
         </motion.div>
 
-        {/* Main Heading */}
+        {/* Comparison Main Heading */}
         <motion.h2
-          className={`text-center mb-8 ${themeClasses.primaryText}`}
-          style={{ fontFamily: 'Poppins, sans-serif', fontSize: '30px', fontWeight: 700 }}
+          className={`text-center mb-8 ${themeClasses.primaryText} text-[25px] sm:text-[30px]`}
+          style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, lineHeight: '30px' }}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -1376,10 +1410,10 @@ export default function EntalogicsHero() {
           </div>
         </motion.div>
 
-        {/* Main Heading */}
+        {/* Testimonials Main Heading */}
         <motion.h2
-          className={`text-center mb-12 ${themeClasses.primaryText}`}
-          style={{ fontFamily: 'Poppins, sans-serif', fontSize: '30px', fontWeight: 700 }}
+          className={`text-center mb-12 ${themeClasses.primaryText} text-[25px] sm:text-[30px]`}
+          style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, lineHeight: '30px' }}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -1462,352 +1496,152 @@ export default function EntalogicsHero() {
       {/* FAQ Section */}
       <div className="relative z-10 max-w-3xl mx-auto px-3 sm:px-5 lg:px-6 mb-16">
         {/* Main Heading */}
-        <motion.h2
-          className={`text-center mb-12 ${themeClasses.primaryText}`}
-          style={{ fontFamily: 'Poppins, sans-serif', fontSize: '30px', fontWeight: 700 }}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-        >
+        <h2 className={`text-center mb-12 ${themeClasses.primaryText} text-[25px] sm:text-[30px]`} style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, lineHeight: '30px' }}>
           Questions? Answers.
-        </motion.h2>
-
-        {/* FAQ Items */}
-        <div className="space-y-3">
+        </h2>
+        {/* FAQ Cards */}
+        <div className="space-y-5">
           {faqData.map((faq, index) => (
-            <motion.div
+            <div
               key={faq.id}
-              className={`${themeClasses.cardBg} border rounded-2xl overflow-hidden transition-all duration-700`}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
+              className={`border rounded-2xl transition-all duration-300 cursor-pointer ${isDarkMode ? themeClasses.cardBg : 'bg-white border-gray-200'}`}
+              onClick={() => setOpenFAQ(openFAQ === faq.id ? null : faq.id)}
+              style={{ boxShadow: openFAQ === faq.id ? '0 0 0 2px #512FEB22' : 'none', padding: '1.5rem' }}
             >
-              <button
-                onClick={() => toggleFAQ(faq.id)}
-                className={`w-full px-8 py-6 text-left flex items-center justify-between hover:${isDarkMode ? "bg-gray-800/50" : "bg-gray-50"} transition-colors duration-300`}
-              >
-                <span className={`${themeClasses.primaryText} font-bold text-lg pr-4`}>{faq.question}</span>
-                <motion.div
-                  animate={{ rotate: openFAQ === faq.id ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="flex-shrink-0"
+              <div className="flex items-center justify-between">
+                <div className="flex flex-col w-full">
+                  <div className="flex items-center w-full">
+                    <h3
+                      className={`flex-1 font-bold`}
+                      style={{
+                        fontFamily: 'sans-serif',
+                        fontSize: '18px',
+                        fontWeight: 700,
+                        lineHeight: '28px',
+                        color: isDarkMode ? '#fff' : '#111',
+                      }}
+                    >
+                      {faq.question}
+                    </h3>
+                    <span
+                      className="ml-4 select-none"
+                      style={{ display: 'flex', alignItems: 'center', color: '#36c6f0' }}
                 >
                   <svg
-                    className={`w-6 h-6 ${openFAQ === faq.id ? "text-cyan-400" : themeClasses.mutedText}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        style={{ transition: 'transform 0.3s', transform: openFAQ === faq.id ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                      >
+                        <path d="M6 8L10 12L14 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                </motion.div>
-              </button>
-
-              <AnimatePresence>
-                {openFAQ === faq.id && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="overflow-hidden"
-                  >
-                    <div className="px-8 pb-6">
-                      <div className="w-full h-px bg-gradient-to-r from-cyan-400 to-orange-400 mb-4"></div>
-                      <p className={`${themeClasses.secondaryText} leading-relaxed`}>{faq.answer}</p>
+                    </span>
                     </div>
-                  </motion.div>
+                  {openFAQ === faq.id && (
+                    <div className={`w-full mt-2 mb-2 rounded-full bg-gradient-to-r ${isDarkMode ? 'from-cyan-400 to-orange-400' : 'from-cyan-500 to-orange-300'}`} style={{ height: '1px' }} />
                 )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
         </div>
       </div>
-
-      {/* Contact Section */}
-      <div className="relative z-10 max-w-5xl mx-auto px-3 sm:px-5 lg:px-6 mb-16">
-        {/* Contact Badge */}
-        <motion.div
-          className="flex justify-center mb-10"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <div className="inline-block px-5 py-1 rounded-full border transition-all duration-700 shadow-[0_0_16px_2px_rgb(81,47,235,0.7)] border-[rgb(81,47,235)]">
-            <span className={`${themeClasses.mutedText} text-base font-medium`}>Contacts</span>
-          </div>
-        </motion.div>
-
-        {/* Contact Form Container */}
-        <motion.div
-          className={`${themeClasses.cardBg} border rounded-3xl p-7 lg:p-10 transition-all duration-700`}
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <div className="grid lg:grid-cols-2 gap-8 items-start">
-            {/* Left Side - Contact Info */}
-            <div className="space-y-8">
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                viewport={{ once: true }}
-              >
-                <h2 className={`mb-6 leading-tight ${themeClasses.primaryText}`} style={{ fontFamily: 'Poppins, sans-serif', fontSize: '30px', fontWeight: 700 }}>
-                  Ready to Build Something Amazing?
-                </h2>
-                <p className={`text-lg ${themeClasses.secondaryText} leading-relaxed`}>
-                  Let's discuss your project and turn your vision into a high-performing website that drives results.
-                </p>
-              </motion.div>
-
-              {/* Contact Details */}
-              <motion.div
-                className="space-y-6"
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                viewport={{ once: true }}
-              >
-                {/* Email */}
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-cyan-400 to-cyan-500 rounded-lg flex items-center justify-center shadow-lg shadow-cyan-500/25">
-                    <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className={`${themeClasses.primaryText} font-medium`}>hello@evokode.com</p>
-                  </div>
-                </div>
-
-                {/* Phone */}
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-orange-400 to-orange-500 rounded-lg flex items-center justify-center shadow-lg shadow-orange-500/25">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className={`${themeClasses.primaryText} font-medium`}>+1 (555) 123-4567</p>
-                  </div>
-                </div>
-
-                {/* Location */}
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-cyan-400 to-cyan-500 rounded-lg flex items-center justify-center shadow-lg shadow-cyan-500/25">
-                    <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className={`${themeClasses.primaryText} font-medium`}>San Francisco, CA</p>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Right Side - Contact Form */}
-            <motion.div
-              className="space-y-6"
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              viewport={{ once: true }}
-            >
-              <form className="space-y-6">
-                {/* Name Field */}
-                <div>
-                  <label className={`block text-sm font-medium ${themeClasses.primaryText} mb-2`}>Name</label>
-                  <input
-                    type="text"
-                    placeholder="Jane Smith"
-                    className={`w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 ${
-                      isDarkMode
-                        ? "bg-gray-800/50 border-gray-700 text-white placeholder-gray-400 focus:bg-gray-800/70"
-                        : "bg-gray-50 border-gray-300 text-black placeholder-gray-500 focus:bg-white"
-                    }`}
-                  />
-                </div>
-
-                {/* Email Field */}
-                <div>
-                  <label className={`block text-sm font-medium ${themeClasses.primaryText} mb-2`}>Email</label>
-                  <input
-                    type="email"
-                    placeholder="jane@framer.com"
-                    className={`w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 ${
-                      isDarkMode
-                        ? "bg-gray-800/50 border-gray-700 text-white placeholder-gray-400 focus:bg-gray-800/70"
-                        : "bg-gray-50 border-gray-300 text-black placeholder-gray-500 focus:bg-white"
-                    }`}
-                  />
-                </div>
-
-                {/* Message Field */}
-                <div>
-                  <label className={`block text-sm font-medium ${themeClasses.primaryText} mb-2`}>Message</label>
-                  <textarea
-                    rows={5}
-                    placeholder="Hi, I am reaching out for..."
-                    className={`w-full px-4 py-3 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 resize-none ${
-                      isDarkMode
-                        ? "bg-gray-800/50 border-gray-700 text-white placeholder-gray-400 focus:bg-gray-800/70"
-                        : "bg-gray-50 border-gray-300 text-black placeholder-gray-500 focus:bg-white"
-                    }`}
-                  />
-                </div>
-
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  className="w-full bg-[rgb(81,47,235)] text-white font-bold px-8 py-4 rounded-lg text-lg transition-all duration-300 hover:transform hover:-translate-y-0.5"
-                >
-                  Submit
-                </button>
-              </form>
-            </motion.div>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Image Popup Modal */}
-      {selectedImage && (
-        <div
-          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4 touch-action-none"
-          onClick={() => { setSelectedImage(null); setZoom(1); setOffset({ x: 0, y: 0 }); }}
-        >
-          <div
-            className="relative max-w-4xl max-h-[90vh] w-full"
-            onWheel={e => {
-              e.preventDefault();
-              // Get bounding rect of image
-              const img = e.currentTarget.querySelector('img');
-              if (!img) return;
-              const rect = img.getBoundingClientRect();
-              // Mouse position relative to image center
-              const mouseX = e.clientX - rect.left - rect.width / 2;
-              const mouseY = e.clientY - rect.top - rect.height / 2;
-              // Calculate new zoom
-              let next = zoom - e.deltaY * 0.01;
-              next = Math.max(1, Math.min(3, next));
-              // Adjust offset so the point under cursor stays fixed
-              if (next !== zoom) {
-                const scaleChange = next / zoom;
-                setOffset(prev => ({
-                  x: (prev.x - mouseX) * scaleChange + mouseX,
-                  y: (prev.y - mouseY) * scaleChange + mouseY,
-                }));
-                setZoom(next);
-              }
-            }}
-            tabIndex={0}
-            style={{ outline: 'none' }}
-          >
-            <button
-              onClick={() => { setSelectedImage(null); setZoom(1); setOffset({ x: 0, y: 0 }); }}
-              className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors"
-            >
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-            <img
-              src={selectedImage || "/placeholder.svg"}
-              alt="Portfolio item"
+              <div
               style={{
-                transform: `translate(${offset.x}px, ${offset.y}px) scale(${zoom})`,
-                transition: isDragging ? 'none' : 'transform 0.3s cubic-bezier(.4,2,.6,1)',
-                cursor: zoom !== 1 ? (isDragging ? 'grabbing' : 'grab') : 'auto',
-                touchAction: 'none',
-                userSelect: 'none',
-              }}
-              className="max-h-[80vh] max-w-full object-contain mx-auto rounded-lg shadow-2xl select-none"
-              draggable={false}
-              onMouseDown={handlePointerDown}
-              onMouseMove={handlePointerMove}
-              onMouseUp={handlePointerUp}
-              onMouseLeave={handlePointerUp}
-              onDoubleClick={handleDoubleClick}
-              onTouchStart={handlePointerDown}
-              onTouchMove={handlePointerMove}
-              onTouchEnd={handleTouchEnd}
-            />
-          </div>
-        </div>
-      )}
+                  maxHeight: openFAQ === faq.id ? 500 : 0,
+                  opacity: openFAQ === faq.id ? 1 : 0,
+                  paddingTop: openFAQ === faq.id ? 12 : 0,
+                  paddingBottom: openFAQ === faq.id ? 12 : 0,
+                  overflow: 'hidden',
+                  transition: 'max-height 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.4s, padding 0.4s',
+                }}
+              >
+                <p className={`text-sm sm:text-base`} style={{
+                    lineHeight: 1.5,
+                    color: isDarkMode ? themeClasses.secondaryText.replace('text-', '').replace('-', '#') : '#444',
+                  }}>
+                     {faq.answer}
+                   </p>
+                  </div>
+                  </div>
+          ))}
+                  </div>
+                </div>
 
-      {/* Floating CTA */}
-      <button
-        onClick={openCalendly}
-        className={`fixed bottom-8 right-8 bg-[rgb(81,47,235)] text-white px-6 py-3 rounded-lg transition-all duration-200 hover:transform hover:-translate-y-0.5 z-50`}
-      >
-        Book a call →
-      </button>
+      {/* Contact Section and Footer */}
+      <div className="relative z-10 max-w-4xl mx-auto px-3 sm:px-5 lg:px-6 mb-20">
+        <div className={`rounded-2xl border p-8 shadow-xl flex flex-col md:flex-row gap-8 items-stretch ${isDarkMode ? 'bg-[#10131a] border-gray-800' : 'bg-white border-gray-200'}`}
+          style={{ minHeight: 400 }}>
+          {/* Left: Info */}
+          <div className="flex-1 flex flex-col justify-center">
+            <h2 className={`mb-2 ${themeClasses.primaryText} text-[25px] sm:text-[30px]`} style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, lineHeight: '30px' }}>Ready to Build Something Amazing?</h2>
+            <p className={`mb-6 text-lg ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>Let's discuss your project and turn your vision into a high-performing website that drives results.</p>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-cyan-500 text-white text-2xl">✉️</span>
+                <span className="text-base font-medium select-all">hello@evokode.com</span>
+                  </div>
+              <div className="flex items-center gap-3">
+                <span className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-orange-400 text-white text-2xl">📞</span>
+                <span className="text-base font-medium select-all">+1 (555) 123-4567</span>
+                  </div>
+              <div className="flex items-center gap-3">
+                <span className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-cyan-400 text-white text-2xl">📍</span>
+                <span className="text-base font-medium">San Francisco, CA</span>
+                </div>
+            </div>
+          </div>
+          {/* Right: Form */}
+          <form className="flex-1 space-y-5 flex flex-col justify-center">
+                <div>
+              <label className={`block mb-1 font-semibold ${isDarkMode ? 'text-white' : 'text-black'}`}>Name</label>
+              <input type="text" placeholder="Jane Smith" className={`w-full px-4 py-3 rounded-lg border bg-transparent text-base font-medium focus:outline-none focus:ring-2 focus:ring-[rgb(81,47,235)] ${isDarkMode ? 'border-gray-700 text-white' : 'border-gray-300 text-black'}`} />
+                </div>
+                <div>
+              <label className={`block mb-1 font-semibold ${isDarkMode ? 'text-white' : 'text-black'}`}>Email</label>
+              <input type="email" placeholder="jane@framer.com" className={`w-full px-4 py-3 rounded-lg border bg-transparent text-base font-medium focus:outline-none focus:ring-2 focus:ring-[rgb(81,47,235)] ${isDarkMode ? 'border-gray-700 text-white' : 'border-gray-300 text-black'}`} />
+                </div>
+                <div>
+              <label className={`block mb-1 font-semibold ${isDarkMode ? 'text-white' : 'text-black'}`}>Message</label>
+              <textarea placeholder="Hi, I am reaching out for..." rows={4} className={`w-full px-4 py-3 rounded-lg border bg-transparent text-base font-medium focus:outline-none focus:ring-2 focus:ring-[rgb(81,47,235)] ${isDarkMode ? 'border-gray-700 text-white' : 'border-gray-300 text-black'}`}></textarea>
+                </div>
+            <button type="submit" className="w-full bg-[rgb(81,47,235)] text-white py-3 rounded-lg font-bold text-lg transition-all hover:bg-cyan-600">Submit</button>
+              </form>
+          </div>
+      </div>
 
       {/* Footer */}
-      <footer className={`w-full py-10 px-8 relative ${themeClasses.mainBg}`}>
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-          <div>
-            <h2 className={`${themeClasses.primaryText} text-3xl font-bold mb-2`}>evokode.com</h2>
-            <p className={`${themeClasses.secondaryText} text-lg max-w-xl leading-snug`}>Building high-performing websites and digital solutions that drive real business results. Your success is our mission.</p>
+<footer className={`w-full py-10 mt-10 ${isDarkMode ? 'bg-gradient-to-br from-[#10131a] via-[#181A20] to-[#10131a]' : 'bg-gray-50'}`}>
+  <div className="max-w-7xl mx-auto px-8 flex flex-col md:flex-row items-center md:items-end justify-between gap-4">
+    
+    {/* Text Content */}
+    <div className="text-left w-full md:w-auto">
+      <span className={`font-extrabold text-2xl block ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+        evokode.com
+      </span>
+      <span className={`block mt-2 text-base ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+        Building high-performing websites and digital solutions that drive real business results. Your success is our mission.
+      </span>
           </div>
-          <div className="flex items-center gap-4 mt-4 md:mt-0">
-            <a href="#" className="bg-[#222] rounded-lg p-2 flex items-center justify-center hover:bg-[rgb(81,47,235)] transition-colors" aria-label="LinkedIn">
-              <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="text-white"><path d="M16 8a6 6 0 016 6v5h-4v-5a2 2 0 00-4 0v5h-4v-9h4v1.5A4.5 4.5 0 0116 8zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-            </a>
-            <a href="#" className="bg-[#222] rounded-lg p-2 flex items-center justify-center hover:bg-[rgb(81,47,235)] transition-colors" aria-label="X">
-              <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="text-white"><path d="M17.53 6.47a.75.75 0 00-1.06 0L12 10.94 7.53 6.47a.75.75 0 10-1.06 1.06L10.94 12l-4.47 4.47a.75.75 0 101.06 1.06L12 13.06l4.47 4.47a.75.75 0 101.06-1.06L13.06 12l4.47-4.47a.75.75 0 000-1.06z"/></svg>
-            </a>
-            <a href="#" className="bg-[#222] rounded-lg p-2 flex items-center justify-center hover:bg-[rgb(81,47,235)] transition-colors" aria-label="Instagram">
-              <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="text-white"><rect x="2" y="2" width="20" height="20" rx="6"/><circle cx="12" cy="12" r="5"/><circle cx="17" cy="7" r="1.5"/></svg>
+
+    {/* Social Icons */}
+    <div className="flex gap-3 mt-6 md:mt-0">
+      {/* LinkedIn */}
+      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+        className={`w-10 h-10 flex items-center justify-center rounded-lg ${isDarkMode ? 'bg-[#23232b]' : 'bg-gray-200'} hover:bg-[rgb(81,47,235)] transition-colors`}>
+        <svg width="22" height="22" fill={isDarkMode ? "#fff" : "#000"} viewBox="0 0 24 24">
+          <path d="M6.94 19H3.67V8.56h3.27V19zM5.3 7.22a1.9 1.9 0 1 1 0-3.8 1.9 1.9 0 0 1 0 3.8zM20.33 19h-3.27v-5.1c0-1.22-.02-2.8-1.71-2.8-1.7 0-1.96 1.33-1.96 2.7V19h-3.27V8.56h3.14v1.43h.04c.44-.83 1.52-1.7 3.13-1.7 3.35 0 3.97 2.2 3.97 5.06V19z"/>
+        </svg>
+      </a>
+
+      {/* Instagram */}
+      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+        className={`w-10 h-10 flex items-center justify-center rounded-lg ${isDarkMode ? 'bg-[#23232b]' : 'bg-gray-200'} hover:bg-[rgb(81,47,235)] transition-colors`}>
+        <svg width="22" height="22" fill={isDarkMode ? "#fff" : "#000"} viewBox="0 0 24 24">
+          <path d="M12 8.6a3.4 3.4 0 1 0 0 6.8 3.4 3.4 0 0 0 0-6.8zm0 5.6a2.2 2.2 0 1 1 0-4.4 2.2 2.2 0 0 1 0 4.4zm4.5-5.7a.8.8 0 1 1-1.6 0 .8.8 0 0 1 1.6 0z"/>
+          <path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.07 1.9.25 2.4.42.6.23 1 .5 1.44.94.44.44.7.84.94 1.44.17.5.35 1.2.42 2.4.07 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.07 1.2-.25 1.9-.42 2.4-.23.6-.5 1-.94 1.44-.44.44-.84.7-1.44.94-.5.17-1.2.35-2.4.42-1.3.07-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.07-1.9-.25-2.4-.42-.6-.23-1-.5-1.44-.94-.44-.44-.7-.84-.94-1.44-.17-.5-.35-1.2-.42-2.4C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.07-1.2.25-1.9.42-2.4.23-.6.5-1 .94-1.44.44-.44.84-.7 1.44-.94.5-.17 1.2-.35 2.4-.42C8.4 2.2 8.8 2.2 12 2.2zm0-2.2C8.7 0 8.3 0 7 .07c-1.3.07-2.2.25-3 .5-.8.3-1.5.7-2.2 1.4C1.2 2.8.8 3.5.5 4.3c-.25.8-.43 1.7-.5 3C0 8.3 0 8.7 0 12c0 3.3 0 3.7.07 5 .07 1.3.25 2.2.5 3 .3.8.7 1.5 1.4 2.2.7.7 1.4 1.1 2.2 1.4.8.25 1.7.43 3 .5C8.3 24 8.7 24 12 24s3.7 0 5-.07c1.3-.07 2.2-.25 3-.5.8-.3 1.5-.7 2.2-1.4.7-.7 1.1-1.4 1.4-2.2.25-.8.43-1.7.5-3 .07-1.3.07-1.7.07-5s0-3.7-.07-5c-.07-1.3-.25-2.2-.5-3-.3-.8-.7-1.5-1.4-2.2-.7-.7-1.4-1.1-2.2-1.4-.8-.25-1.7-.43-3-.5C15.7 0 15.3 0 12 0z"/>
+        </svg>
             </a>
           </div>
+
         </div>
       </footer>
+
+
     </div>
   )
 }
-
-// Add TypeScript declaration for Calendly
-declare global {
-  interface Window {
-    Calendly: {
-      initPopupWidget: (options: { url: string }) => void
-    }
-    __pausePortfolioCarousel?: boolean;
-    __portfolioCarouselInterval?: NodeJS.Timeout;
-  }
-}
-
-/* Add this CSS utility to hide scrollbars */
-<style jsx global>{`
-  .hide-scrollbar::-webkit-scrollbar { display: none; }
-  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-`}</style>
