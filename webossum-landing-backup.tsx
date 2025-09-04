@@ -31,11 +31,6 @@ export default function EntalogicsHero() {
   const autoScrollPaused = useRef(false)
   const marqueeDrag = useRef({ dragging: false, startX: 0, scrollLeft: 0 })
   const [emblaApi, setEmblaApi] = useState<any>(null)
-  
-  // Contact form state
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitMessage, setSubmitMessage] = useState('')
 
   // Add scroll detection
   useEffect(() => {
@@ -80,42 +75,6 @@ export default function EntalogicsHero() {
   // Theme toggle function
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode)
-  }
-
-  // Contact form handlers
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
-  }
-
-  const handleFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setSubmitMessage('')
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-
-      const result = await response.json()
-
-      if (result.success) {
-        setSubmitMessage('Message sent!')
-        setFormData({ name: '', email: '', message: '' }) // Clear form
-      } else {
-        setSubmitMessage('Failed to send.')
-      }
-    } catch (error) {
-      console.error('Form submission error:', error)
-      setSubmitMessage('Failed to send.')
-    } finally {
-      setIsSubmitting(false)
-    }
   }
 
   // Theme classes with stark contrast
@@ -1627,64 +1586,20 @@ export default function EntalogicsHero() {
             </div>
           </div>
           {/* Right: Form */}
-          <form onSubmit={handleFormSubmit} className="flex-1 space-y-5 flex flex-col justify-center">
+          <form className="flex-1 space-y-5 flex flex-col justify-center">
                 <div>
               <label className={`block mb-1 font-semibold ${isDarkMode ? 'text-white' : 'text-black'}`}>Name</label>
-                  <input
-                    type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                    placeholder="Jane Smith"
-                required
-                className={`w-full px-4 py-3 rounded-lg border bg-transparent text-base font-medium focus:outline-none focus:ring-2 focus:ring-[rgb(81,47,235)] ${isDarkMode ? 'border-gray-700 text-white' : 'border-gray-300 text-black'}`} 
-                  />
+              <input type="text" placeholder="Jane Smith" className={`w-full px-4 py-3 rounded-lg border bg-transparent text-base font-medium focus:outline-none focus:ring-2 focus:ring-[rgb(81,47,235)] ${isDarkMode ? 'border-gray-700 text-white' : 'border-gray-300 text-black'}`} />
                 </div>
                 <div>
               <label className={`block mb-1 font-semibold ${isDarkMode ? 'text-white' : 'text-black'}`}>Email</label>
-                  <input
-                    type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                    placeholder="jane@framer.com"
-                required
-                className={`w-full px-4 py-3 rounded-lg border bg-transparent text-base font-medium focus:outline-none focus:ring-2 focus:ring-[rgb(81,47,235)] ${isDarkMode ? 'border-gray-700 text-white' : 'border-gray-300 text-black'}`} 
-                  />
+              <input type="email" placeholder="jane@framer.com" className={`w-full px-4 py-3 rounded-lg border bg-transparent text-base font-medium focus:outline-none focus:ring-2 focus:ring-[rgb(81,47,235)] ${isDarkMode ? 'border-gray-700 text-white' : 'border-gray-300 text-black'}`} />
                 </div>
                 <div>
               <label className={`block mb-1 font-semibold ${isDarkMode ? 'text-white' : 'text-black'}`}>Message</label>
-                  <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleInputChange}
-                    placeholder="Hi, I am reaching out for..."
-                rows={4} 
-                required
-                className={`w-full px-4 py-3 rounded-lg border bg-transparent text-base font-medium focus:outline-none focus:ring-2 focus:ring-[rgb(81,47,235)] ${isDarkMode ? 'border-gray-700 text-white' : 'border-gray-300 text-black'}`}
-              ></textarea>
+              <textarea placeholder="Hi, I am reaching out for..." rows={4} className={`w-full px-4 py-3 rounded-lg border bg-transparent text-base font-medium focus:outline-none focus:ring-2 focus:ring-[rgb(81,47,235)] ${isDarkMode ? 'border-gray-700 text-white' : 'border-gray-300 text-black'}`}></textarea>
                 </div>
-                <button
-                  type="submit"
-              disabled={isSubmitting}
-              className={`w-full py-3 rounded-lg font-bold text-lg transition-all ${
-                isSubmitting 
-                  ? 'bg-gray-400 cursor-not-allowed' 
-                  : 'bg-[rgb(81,47,235)] hover:bg-cyan-600'
-              } text-white`}
-            >
-              {isSubmitting ? 'Sending...' : 'Submit'}
-                </button>
-            
-            {submitMessage && (
-              <div className={`text-center text-sm font-medium ${
-                submitMessage === 'Message sent!' 
-                  ? 'text-green-600' 
-                  : 'text-red-600'
-              }`}>
-                {submitMessage}
-              </div>
-            )}
+            <button type="submit" className="w-full bg-[rgb(81,47,235)] text-white py-3 rounded-lg font-bold text-lg transition-all hover:bg-cyan-600">Submit</button>
               </form>
           </div>
       </div>
