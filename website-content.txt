@@ -218,3 +218,4 @@ TECHNICAL CHANGES
 - Hero section padding reduced for upward movement
 - Z-index fixes for header navigation
 - Custom window property for carousel hover pause functionality
+image.png
